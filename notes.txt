@@ -1,0 +1,76 @@
+Chap 4:
+Lists, Arrays - vectors & strings , Structures, Hash Tables
+Instance.
+
+Make the array:
+
+(make-array
+  '(2 3)                    ; Dimensions of the array
+  :initial-element nil)     ; Element to be filled by default.
+
+Retrieve an element:
+(aref arr 0 0)
+
+setf works the normal way
+
+Literal way to denote arrays is #na where n is the number of dimensions
+#2a((b nil nil) (nil nil nil))
+
+If *print-array* is t then an array will always be printed in the above form.
+
+For 1D array
+(setf vec (make-array 4 :initial-element nil))
+#(nil nil nil nil)
+
+1D Array == Vector
+
+(vector "a" 'b 3)
+#("a" B 3)
+
+Use the above syntax to denote a literal vector.
+
+aref can be used, but svref is faster
+
+(svref vec 0)
+
+STRINGS - Are vectors of characters.
+
+constant strings are "series of characters surrounded by double quotes"
+
+individual characters - #\c
+
+char-code & code-char
+
+aref will work on strings, but char is faster
+
+(aref "afroz" 1) OR (char "afroz" 1)
+
+setf works as usual for strings.
+
+Calling format with |nil| as the first argument makes it return as a string what it would have printed.
+
+(format nil "~A or ~A" "truth" "dare")
+
+Sequence includes lists and vectors (and therefore strings)
+
+
+                  Sequence
+                     |
+         -----------------------
+        |                      |
+      array                  list
+        |
+     vector                  
+        |
+    strings
+
+Functions Learned:
+make-array  -   make the array
+aref    -   reference an element of the array
+vector  -   make a vector
+svref   -   reference an element of the vector
+char-code   -   character to number
+code-char   -   number to character
+char<, char<=, char>, char>=, char/=    -   comparison functions on characters
+string-equal    -   ignores case
+concatenate -   concatenates 'stuff' (concatenate 'string "not " "to worry")
