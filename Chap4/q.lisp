@@ -7,7 +7,7 @@
            (let ((dim (first dims)))
                 (if (evenp dim)
                     (quarter-turn-even-new-arr arr dim)
-                    (quarter-turn-odd arr dim)))
+                    (quarter-turn-odd-new-arr arr dim)))
            nil)))
 
 ;; Modifies the array in place.
@@ -43,5 +43,18 @@
 			narr))
 
 
-(defun quarter-turn-odd (arr x)
-  arr)
+(defun quarter-turn-odd-new-arr (arr x)
+  (let ((k (floor (/ x 2)))
+			  (narr (make-array (list x x) :initial-element nil)))
+		(dotimes (ix k)
+			(let ((i (1+ ix)))
+			  (dotimes (j (* 2 i))
+			    (let ((llj (aref arr (- k i) (+ j (- k i))))
+			          (tlj (aref arr (+ j (- k i)) (+ k i)))
+			          (trj (aref arr (+ k i) (- (+ k i) j)))
+			          (lrj (aref arr (- (+ k i) j) (- k i))))
+			         (setf (aref narr (- k i) (+ j (- k i))) lrj
+				             (aref narr (+ j (- k i)) (+ k i)) llj
+					           (aref narr (+ k i) (- (+ k i) j)) tlj
+						         (aref narr (- (+ k i) j) (- k i)) trj)))))
+		narr))
