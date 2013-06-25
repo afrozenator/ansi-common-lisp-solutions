@@ -1,5 +1,8 @@
-;; 1
-;;
+;;; 1
+;;;
+;;; Rotate an array 90deg clockwise.
+
+;; Main function
 (defun quarter-turn (arr)
   (let ((dims (array-dimensions arr)))
        (if (and (eql 2 (length dims))
@@ -58,3 +61,12 @@
 					           (aref narr (+ k i) (- (+ k i) j)) tlj
 						         (aref narr (- (+ k i) j) (- k i)) trj)))))
 		narr))
+
+;;; 2
+;;;
+;;; Use reduce (equiv foldl, foldr) to define reverse and copy-list.
+(defun reduce-reverse (lst)
+  (reduce #'(lambda (x y) (cons y x)) lst :from-end nil :initial-value nil))
+
+(defun reduce-copy-list (lst)
+  (reduce #'(lambda (x y) (cons x y)) lst :from-end t :initial-value nil))
