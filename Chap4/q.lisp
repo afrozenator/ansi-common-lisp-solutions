@@ -11,7 +11,18 @@
            nil)))
 
 (defun quarter-turn-even (arr x)
-  arr)
+  (let ((k (/ x 2)))
+    (dotimes (ix k)
+      (let ((i (1+ ix)))
+        (dotimes (j (1- (* 2 i)))
+          (let ((llj (aref arr (- k i) (+ j (- k i))))
+                (tlj (aref arr (+ j (- k i)) (1- (+ k i))))
+                (trj (aref arr (1- (+ k i)) (- (1- (+ k i)) j)))
+                (lrj (aref arr (- (1- (+ k i)) j) (- k i))))
+               (setf (aref arr (- k i) (+ j (- k i))) lrj
+	                   (aref arr (+ j (- k i)) (1- (+ k i))) llj
+		                 (aref arr (1- (+ k i)) (- (1- (+ k i)) j)) tlj
+			               (aref arr (- (1- (+ k i)) j) (- k i)) trj)))))))
 
 (defun quarter-turn-odd (arr x)
   arr)
