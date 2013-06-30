@@ -113,3 +113,6 @@
                       (min-sf x))
                       (multiple-value-bind (min-rest max-rest) (max-min-t2 (cdr lst))
                         (values (min min-sf min-rest) (max max-sf max-rest)))))))
+
+;;; 9
+;; TODO(afro): Do this when in mood.
