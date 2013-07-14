@@ -85,3 +85,32 @@
     (1 (car preds))
     (t #'(lambda (x)
            (or (funcall (car preds) x) (funcall (apply #'disjoin (cdr preds)) x))))))
+
+;; Another way using helper function and reduce.
+(defun disjoin2-helper (pred1 pred2)
+  #'(lambda (x) (or (funcall pred1 x) (funcall pred2 x))))
+
+(defun disjoin2 (&rest preds)
+  (reduce #'disjoin2-helper preds))
+
+;; Rewriting of the above with |labels|.
+(defun disjoin22 (&rest preds)
+  (labels ((disjoin22-helper (pred1 pred2)
+             #'(lambda (x) (or (funcall pred1 x) (funcall pred2 x)))))
+    (reduce #'disjoin22-helper preds)))
+
+
+;;; conjoin - just replace the above |or|s with |and|s.
+
+;;; curry - take a function and some of its arguments, and return another function which is
+;;;         just the same function but which just takes the rest of the arguments.
+(defun curry (fn &rest args)
+  #'(lambda (&rest x) (apply fn (append args x)))) 
+
+(defun rcurry (fn &rest args)
+  #'(lambda (&rest x) (apply fn (append x args))))
+
+;;; always - lisp's constantly.
+;;;        - Takes an argument and returns a function that returns that argument.
+(defun always (arg)
+  #'(lambda (&rest x) arg))
