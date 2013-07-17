@@ -30,11 +30,11 @@
 ;;; 4
 ;;; most - highest and second highest.
 
-(defun my-max (a1 a2 &optional (test #'>) (key #'identity))
+(defun my-max (a1 a2 &key (test #'>) (key #'identity))
   (cond
     ((null a1) a2)
     ((null a2) a1)
-    (otherwise (if (funcall test (key a1) (key a2))
+    (t (if (funcall test (funcall key a1) (funcall key a2))
                    a1
                    a2))))
 
@@ -42,6 +42,7 @@
   (case (length lst)
     (0 (values nil nil))
     (1 (values (car lst) nil))
+    (2 (values (first lst) (second lst) nil))
     (t (multiple-value-bind (m1 m2) (most-modified fn (list (first lst) (second lst)))
          (multiple-value-bind (m3 m4) (most-modified fn (cdr lst)) ; we do cdr and not cddr
            (values (my-max m1 m3 :key fn) (my-max m4 (my-max m1 m3 :test #'< :key fn) :key fn)))))))
